@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+  body {
+      padding: 50px;
+      font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  }
+
+  a {
+    color: #00B7FF;
+  }
+
+  p{
+    text-align:center;
+    font-size:15px;
+}
+  </style>
+  <title>Wikipedia API</title>
+</head>
+<body>
+    <form action="/search">
+        <input type="text" name="search" id='data'/>
+        <button type='submit'>search</button>
+    </form>
+    <p id='res'></p>
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<link rel="EditURI" type="application/rsd+xml" href="//www.mediawiki.org/w/api.php?action=rsd" />
+
+<script type='text/javascript'>
+
+  $('form').submit(function(e){
+    e.preventDefault();
+
+    console.log($('#data').val());
+
+    $.ajax({
+      url:'/search',
+      type:'post',
+      dataType:'json',
+      contentType: 'application/json',
+      data:JSON.stringify({
+        search: $('#data').val()
+      }),
+      success: function(data){
+        console.log("success",data)
+        const parsedata = JSON.stringify(data);
+        $('#res').append(parsedata);
+      },
+      error:function(err){
+        console.error(err)
+      }
+    })
+  })
+
+</script>
